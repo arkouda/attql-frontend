@@ -15,8 +15,8 @@ export var buildUrl = (url: string, parameters: any) => {
     for (const key in parameters) {
         if (parameters.hasOwnProperty(key)) {
             const value = parameters[key];
-            qs +=
-                encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+            if(''.localeCompare(value) != 0)
+                qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
         }
     }
     if (qs.length > 0) {
