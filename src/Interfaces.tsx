@@ -1,16 +1,25 @@
-export interface ITabularViewProps {
-    pageNo : number,
-    rowCount : number
-    // handleChange(event: any): void;
-}
+export interface ITabularViewProps {}
 
-export interface IState {
+export interface ITimelineViewProps {}
+
+export interface ITabularViewState {
     data?: object[],
-    queryParams: IQueryParams,
+    queryParams: ITabularViewQueryParams,
     api_url: string
 }
 
-export interface IQueryParams {
+export interface ITimelineViewState {
+    data?: object[],
+    queryParams: ITimelineViewQueryParams,
+    api_url: string
+}
+
+export interface ITimelineViewQueryParams {
+    dayLimit: number,
+    page: number
+}
+
+export interface ITabularViewQueryParams {
     rollno_gte? : number,
     rollno_lte? : number,
     day_gte? : number,
