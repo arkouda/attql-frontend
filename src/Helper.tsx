@@ -8,7 +8,9 @@ export var clone = (obj: any) => {
     return copy;
 };
 
-export const defaultURL = 'http://localhost:3001/tabview';
+export const tabViewURL = 'http://localhost:3001/tabview';
+
+export const timelineViewURL = 'http://localhost:3001/timelineview';
 
 export var buildUrl = (url: string, parameters: any) => {
     let qs = "";

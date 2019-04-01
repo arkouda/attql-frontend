@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import { ITabularViewProps, ITabularViewState } from "../Interfaces"
-import { buildUrl, defaultURL, statify } from "../Helper"
+import { buildUrl, tabViewURL, statify } from "../Helper"
 // import { string, any } from 'prop-types';
 
 export class TabularView extends Component<ITabularViewProps, ITabularViewState> {
@@ -11,7 +11,7 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
         super(props);
         this.state = {
             data: [],
-            api_url: defaultURL,
+            api_url: tabViewURL,
             queryParams: {
                 limit: 10,
                 offset: 0,

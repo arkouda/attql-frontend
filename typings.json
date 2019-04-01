@@ -1,0 +1,7 @@
+{
+    "name": "react-visjs-timeline",
+    "version": "1.0",
+    "globalDependencies": {
+        "react-visjs-timeline": "file:typings/custom/react-visjs-timeline.d.ts"
+    }
+}

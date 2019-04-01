@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import * as vis from "vis";
-import Timeline from 'react-vis-timeline';
+import { Group, Items, Item } from 'react-visjs-timeline';
+import {VisTimeline} from "../timeline";
 import { ITimelineViewProps, ITimelineViewState } from "../Interfaces"
-import { buildUrl, defaultURL, statify } from "../Helper"
-import { number, any } from 'prop-types';
+import { buildUrl, timelineViewURL, statify } from "../Helper"
 
 export class TimelineView extends Component<ITimelineViewProps, ITimelineViewState> {
 
     constructor(props: ITimelineViewProps) {
         super(props);
         this.state = {
-            data: [],
-            api_url: defaultURL,
+            data: { items: [], group: [] },
+            api_url: timelineViewURL,
             queryParams: {
-                dayLimit: 10,
+                dayLimit: 1,
                 page: 1
             }
         };
@@ -26,42 +26,27 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
     };
 
     render = () => {
-
-        var numberOfGroups = 4;
-        var groups = new vis.DataSet()
-        for (var i = 0; i < numberOfGroups; i++) {
-            groups.add({
-                id: i,
-                content: 'Truck ' + i
-            })
-        };
-
-        var numberOfItems = 20;
-        var items = new vis.DataSet();
-        var itemsPerGroup = Math.round(numberOfItems / numberOfGroups);
-        for (var truck = 0; truck < numberOfGroups; truck++) {
-            var date = new Date();
-            for (var order = 0; order < itemsPerGroup; order++) {
-                var zeropointtwo : number = 0.2
-                date.setHours(date.getHours() + 4 * (Math.random() < zeropointtwo));
-                var start = new Date(date);
-                date.setHours(date.getHours() + 2 + Math.floor(Math.random() * 4));
-                var end = new Date(date);
-                items.add({
-                    id: order + itemsPerGroup * truck,
-                    group: truck,
-                    start: start,
-                    end: end,
-                    content: 'Order ' + order
+        var idCounter: number = 0;
+        var itemsDataSet: object[] = [];
+        (this.state.data.items).forEach((itemsObj: Items) => {
+            itemsObj.items.forEach((itemObj: Item) => {
+                idCounter += 1;
+                itemsDataSet.push({
+                    id: idCounter,
+                    group: itemsObj.groupid,
+                    start: new Date(),//itemObj.arrivalTime),
+                    // end: new Date(itemObj.departTime),
+                    content: itemObj.arrivalTime + " - " + itemObj.departTime
                 });
-            }
-        };
-
-
+            });
+        });
 
         return (
             <div>
-
+                <p className="header">
+                    Timeline
+                </p>
+                <VisTimeline {...{group: this.state.data.group , items: itemsDataSet, container: "timeline-react"}} />
             </div>
         );
     };

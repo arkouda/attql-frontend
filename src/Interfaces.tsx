@@ -1,3 +1,5 @@
+import { Group , Items} from "react-visjs-timeline";
+
 export interface ITabularViewProps {}
 
 export interface ITimelineViewProps {}
@@ -9,7 +11,7 @@ export interface ITabularViewState {
 }
 
 export interface ITimelineViewState {
-    data?: object[],
+    data: {items: Items[], group: Group[]},
     queryParams: ITimelineViewQueryParams,
     api_url: string
 }

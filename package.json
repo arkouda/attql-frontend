@@ -39,5 +39,6 @@
   "devDependencies": {
     "@types/react-router-dom": "^4.3.1",
     "nodemon": "^1.18.10"
-  }
+  },
+  "typings": "./typings/index.d.ts"
 }

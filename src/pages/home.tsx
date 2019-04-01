@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import { TabularView } from './tabularView';
+import { TimelineView } from './timelineView';
 
 export class Home extends Component {
     render() {
@@ -18,13 +19,13 @@ export class Home extends Component {
                     </TabList>
 
                     <TabPanel>
-                        <TabularView pageNo={1} rowCount={10}></TabularView>
+                        <TabularView></TabularView>
                     </TabPanel>
                     <TabPanel>
                         <h2>Any content 2</h2>
                     </TabPanel>
                     <TabPanel>
-                        <h1>Praveen_Fuck</h1>
+                        <TimelineView/> 
                     </TabPanel>
                 </Tabs>
             </div>);
