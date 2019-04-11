@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import * as vis from "vis";
 import { Group, Items, Item } from 'react-visjs-timeline';
-import {VisTimeline} from "../timeline";
+import {VisTimeline} from "../visTimeline";
+import "../../node_modules/vis/dist/vis.min.css";
 import { ITimelineViewProps, ITimelineViewState } from "../Interfaces"
 import { buildUrl, timelineViewURL, statify } from "../Helper"
+import moment, { Moment } from "moment";
 
 export class TimelineView extends Component<ITimelineViewProps, ITimelineViewState> {
 
@@ -13,16 +14,16 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
             data: { items: [], group: [] },
             api_url: timelineViewURL,
             queryParams: {
-                dayLimit: 1,
+                dayLimit: 2,
                 page: 1
             }
         };
     };
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         fetch(buildUrl(this.state.api_url, this.state.queryParams))
             .then(result => { return result.json() })
-            .then(data => this.setState(statify({ data: data }, this.state)));
+            .then(data => this.setState(statify({ data: data, renderFlag: true }, this.state)));
     };
 
     render = () => {
@@ -34,19 +35,26 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
                 itemsDataSet.push({
                     id: idCounter,
                     group: itemsObj.groupid,
-                    start: new Date(),//itemObj.arrivalTime),
-                    // end: new Date(itemObj.departTime),
+                    start: (new (moment as any)(itemObj.arrivalTime, 'HH:mm:ss')).toDate(),
+                    end: (new (moment as any)(itemObj.departTime, 'HH:mm:ss')).toDate(),
                     content: itemObj.arrivalTime + " - " + itemObj.departTime
                 });
             });
         });
-
+        var options = {
+            orientation: 'top',
+            maxHeight: 400,
+            start: new Date(),
+            end: new Date(1000*60*60*24 + (new Date()).valueOf()),
+            editable: true
+        }
+        console.log(this.state);
+        console.log("itemsdataset", itemsDataSet);
         return (
             <div>
-                <p className="header">
-                    Timeline
-                </p>
-                <VisTimeline {...{group: this.state.data.group , items: itemsDataSet, container: "timeline-react"}} />
+                {(this.state.renderFlag === true) && <div>
+                    <VisTimeline {...{group: this.state.data.group , items: itemsDataSet, options: options}} />
+                </div>}
             </div>
         );
     };

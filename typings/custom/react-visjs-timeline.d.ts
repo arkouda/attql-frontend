@@ -23,9 +23,11 @@ declare module "react-visjs-timeline" {
         group: object[];
         selection?: object[];
         customTimes?: object;
+        animate?: object;
+        currentTime?: object;
     }
 
-    class Timeline extends React.Component {
+    class Timeline extends React.Component<ITimelineProps> {
         // constructor(props:ITimelineProps):any;
         // componentWillMount():any;
         // componentDidMount():any;
