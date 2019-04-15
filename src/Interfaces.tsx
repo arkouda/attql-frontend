@@ -1,4 +1,6 @@
 import { TabularView } from "./pages/tabularView";
+import { HierarchicalView } from "./pages/hierarchicalView";
+import HierarchicalDetailView from "./pages/hierarchicalDetailView";
 
 // VisTimeline typings
 
@@ -12,6 +14,8 @@ export interface Item {
     arrivalTime: string;
     departTime: string;
 }
+
+
 
 export interface Items {
     groupid: number;
@@ -29,6 +33,38 @@ export interface IVisTimelineProps {
 }
 
 // Module Typings ////////////////////
+
+// Hierarchical View
+
+export interface IHierarchicalViewProps {}
+
+export interface IHierarchicalViewState {
+    data?: object[],
+    queryParams: IHierarchicalViewQueryParams,
+    api_url: string
+}
+
+export interface IHierarchicalViewQueryParams {
+    hflag: string
+}
+
+// Hierarchical Detail View
+
+export interface IHierarchicalDetailViewProps {
+    hflag : string,
+    selected_id : number
+}
+export interface IHierarchicalDetailViewState {
+    data?: object[],
+    queryParams: IHierarchicalDetailViewQueryParams,
+    api_url: string 
+}
+
+export interface IHierarchicalDetailViewQueryParams {
+    hflag: string,
+    day?: number,
+    studid?: number
+}
 
 // Timeline View
 

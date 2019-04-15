@@ -12,6 +12,10 @@ export const tabViewURL = 'http://localhost:3001/tabview';
 
 export const timelineViewURL = 'http://localhost:3001/timelineview';
 
+export const hierarchicalViewURL = 'http://localhost:3001/hierarchicalView';
+
+export const hierarchicalDetailViewURL = 'http://localhost:3001/hierarchicalViewDetail';
+
 export var buildUrl = (url: string, parameters: any) => {
     let qs = "";
     for (const key in parameters) {

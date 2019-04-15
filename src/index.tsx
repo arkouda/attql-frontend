@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 // import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom'
 import {Home} from './pages/home'
-import {TabularView} from './pages/tabularView'
 
 const CoreApp = () => (
     <BrowserRouter>

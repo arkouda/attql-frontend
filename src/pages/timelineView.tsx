@@ -28,7 +28,7 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
     render = () => {
         var idCounter: number = 0;
         var itemsDataSet: object[] = [];
-        console.log("items", this.state.data.items);
+        // console.log("items", this.state.data.items);
         (this.state.data.items).forEach((itemsObj: Items) => {
             itemsObj.items.forEach((itemObj: Item) => {
                 idCounter += 1;
