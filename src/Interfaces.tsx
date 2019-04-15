@@ -4,6 +4,13 @@ export interface ITabularViewProps {}
 
 export interface ITimelineViewProps {}
 
+export interface IHierarchicalProps {}
+
+export interface IHierarchicalDetailProps {
+    hflag : string,
+    selected_id : number
+}
+
 export interface ITabularViewState {
     data?: object[],
     queryParams: ITabularViewQueryParams,
@@ -13,7 +20,30 @@ export interface ITabularViewState {
 export interface ITimelineViewState {
     data: {items: Items[], group: Group[]},
     queryParams: ITimelineViewQueryParams,
+    api_url: string,
+    renderFlag?: Boolean
+}
+
+export interface IHierarchicalState {
+    data?: object[],
+    queryParams: IHierarchicalViewQueryParams,
     api_url: string
+}
+
+export interface IHierarchicalDetailState {
+    data?: object[],
+    queryParams: IHierarchicalDetailViewQueryParams,
+    api_url: string 
+}
+
+export interface IHierarchicalDetailViewQueryParams {
+    hflag: string,
+    day?: number,
+    studid?: number
+}
+
+export interface IHierarchicalViewQueryParams {
+    hflag: string
 }
 
 export interface ITimelineViewQueryParams {
