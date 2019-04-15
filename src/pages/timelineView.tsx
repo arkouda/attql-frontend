@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { Group, Items, Item } from 'react-visjs-timeline';
+import React, { Component } from 'react'; 
 import {VisTimeline} from "../visTimeline";
 import "../../node_modules/vis/dist/vis.min.css";
-import { ITimelineViewProps, ITimelineViewState } from "../Interfaces"
+import { ITimelineViewProps, ITimelineViewState, Items, Item } from "../Interfaces"
 import { buildUrl, timelineViewURL, statify } from "../Helper"
 import moment, { Moment } from "moment";
 
@@ -29,6 +28,7 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
     render = () => {
         var idCounter: number = 0;
         var itemsDataSet: object[] = [];
+        // console.log("items", this.state.data.items);
         (this.state.data.items).forEach((itemsObj: Items) => {
             itemsObj.items.forEach((itemObj: Item) => {
                 idCounter += 1;
@@ -48,8 +48,8 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
             end: new Date(1000*60*60*24 + (new Date()).valueOf()),
             editable: true
         }
-        console.log(this.state);
-        console.log("itemsdataset", itemsDataSet);
+        // console.log(this.state);
+        // console.log("itemsdataset", itemsDataSet);
         return (
             <div>
                 {(this.state.renderFlag === true) && <div>

@@ -1,12 +1,10 @@
-/// <reference path="./typings/react-visjs-timeline.d.ts" />
-
 import * as Vis from "vis";
 import "../node_modules/vis/dist/vis.min.css";
-import {ITimelineProps} from "react-visjs-timeline";
+import {IVisTimelineProps} from "./Interfaces";
 import React from 'react';
 
-export class VisTimeline extends React.Component<ITimelineProps> {
-    constructor(props: ITimelineProps) {
+export class VisTimeline extends React.Component<IVisTimelineProps> {
+    constructor(props: IVisTimelineProps) {
         super(props);
     };
 

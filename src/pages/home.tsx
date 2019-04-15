@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import { TabularView } from './tabularView';
 import { TimelineView } from './timelineView';
+import { HierarchicalView } from './hierarchicalView';
 
 export class Home extends Component {
     render() {
@@ -22,7 +23,7 @@ export class Home extends Component {
                         <TabularView></TabularView>
                     </TabPanel>
                     <TabPanel>
-                        <h2>Any content 2</h2>
+                        <HierarchicalView/>
                     </TabPanel>
                     <TabPanel>
                         <TimelineView/> 

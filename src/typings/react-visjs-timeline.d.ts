@@ -1,6 +1,6 @@
 declare module "react-visjs-timeline" {
     import * as React from 'react';
-
+    
     export interface Group {
         id: number;
         content: string;
@@ -27,7 +27,7 @@ declare module "react-visjs-timeline" {
         currentTime?: object;
     }
 
-    class Timeline extends React.Component<ITimelineProps> {
+    export default class Timeline extends React.Component<ITimelineProps, any> {
         // constructor(props:ITimelineProps):any;
         // componentWillMount():any;
         // componentDidMount():any;
@@ -37,4 +37,6 @@ declare module "react-visjs-timeline" {
         // render():any;
     }
 
-};
+    // export const Timeline: (props: ITimelineProps) => React.SFC<ITimelineProps>
+}
+// export = react-;
