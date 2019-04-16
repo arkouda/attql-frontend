@@ -3,7 +3,6 @@ import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import { ITabularViewProps, ITabularViewState } from "../Interfaces"
 import { buildUrl, tabViewURL, statify } from "../Helper"
-// import { string, any } from 'prop-types';
 
 export class TabularView extends Component<ITabularViewProps, ITabularViewState> {
 
@@ -33,15 +32,15 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
         newQueryParams[name] = value;
         var newState: any = { queryParams: statify(newQueryParams, this.state.queryParams) };
         this.setState(statify(newState, this.state) as ITabularViewState, () => {
-            console.log(JSON.stringify(this.state));
+            console.log("TabularView State HandleChange", JSON.stringify(this.state));
         });
 
     };
 
     handleSubmit = () => {
         this.setState(statify({ api_url: buildUrl('http://localhost:3001/tabview', this.state.queryParams) }, this.state), () => {
-            console.log(this.state.queryParams);
-            console.log(this.state.api_url);
+            console.log("TabularView QueryParams", this.state.queryParams);
+            console.log("TabularView API URL", this.state.api_url);
             fetch(this.state.api_url)
                 .then(result => { return result.json() })
                 .then(data => this.setState(statify({ data: data }, this.state)));
@@ -99,7 +98,7 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
                         </div>
                         <label className="col-sm-2"> &lt;=  ArrivalTime &lt;= </label>
                         <div className="col-sm-7">
-                        <input name="arrivaltime_lte" placeholder="AAA" type="string" value={this.state.queryParams.arrivaltime_lte || ''} onChange={this.handleChange} />
+                        <input name="arrivaltime_lte" type="string" value={this.state.queryParams.arrivaltime_lte || ''} onChange={this.handleChange} />
                         </div>
                     </div>
 
