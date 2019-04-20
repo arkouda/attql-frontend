@@ -78,7 +78,9 @@ export interface ITimelineViewState {
 }
 
 export interface ITimelineViewQueryParams {
-    dayLimit: number,
+    dayFrom: number,
+    dayTo: number,
+    limit: number,
     page: number
 }
 

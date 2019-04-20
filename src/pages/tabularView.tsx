@@ -12,7 +12,7 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
             data: [],
             api_url: tabViewURL,
             queryParams: {
-                limit: 10,
+                limit: 1000,
                 offset: 0,
                 page: 1
             }
@@ -32,15 +32,14 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
         newQueryParams[name] = value;
         var newState: any = { queryParams: statify(newQueryParams, this.state.queryParams) };
         this.setState(statify(newState, this.state) as ITabularViewState, () => {
-            console.log("TabularView State HandleChange", JSON.stringify(this.state));
+            // console.log("TabularView State HandleChange", JSON.stringify(this.state));
         });
-
     };
 
     handleSubmit = () => {
-        this.setState(statify({ api_url: buildUrl('http://localhost:3001/tabview', this.state.queryParams) }, this.state), () => {
-            console.log("TabularView QueryParams", this.state.queryParams);
-            console.log("TabularView API URL", this.state.api_url);
+        this.setState(statify({ api_url: buildUrl(tabViewURL, this.state.queryParams) }, this.state), () => {
+            // console.log("TabularView QueryParams", this.state.queryParams);
+            // console.log("TabularView API URL", this.state.api_url);
             fetch(this.state.api_url)
                 .then(result => { return result.json() })
                 .then(data => this.setState(statify({ data: data }, this.state)));
@@ -76,52 +75,42 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
                         </div>
                     </div>
 
-
                     <div className="row">
                         <div className="col-sm-1" />
                         <div className="col-sm-2">
-                        <input name="day_gte" type="number" value={this.state.queryParams.day_gte || ''} onChange={this.handleChange} />
+                            <input name="day_gte" type="number" value={this.state.queryParams.day_gte || ''} onChange={this.handleChange} />
                         </div>
                         <label className="col-sm-2">  &lt;= Day &lt;= </label>
                         <div className="col-sm-7">
-                        <input name="day_lte" type="number" value={this.state.queryParams.day_lte || ''} onChange={this.handleChange} />
+                            <input name="day_lte" type="number" value={this.state.queryParams.day_lte || ''} onChange={this.handleChange} />
                         </div>
                     </div>
-
-
-
 
                     <div className="row">
                         <div className="col-sm-1" />
                         <div className="col-sm-2">
-                        <input name="arrivaltime_gte" type="string" value={this.state.queryParams.arrivaltime_gte || ''} onChange={this.handleChange} />
+                            <input name="arrivaltime_gte" type="string" value={this.state.queryParams.arrivaltime_gte || ''} onChange={this.handleChange} />
                         </div>
                         <label className="col-sm-2"> &lt;=  ArrivalTime &lt;= </label>
                         <div className="col-sm-7">
-                        <input name="arrivaltime_lte" type="string" value={this.state.queryParams.arrivaltime_lte || ''} onChange={this.handleChange} />
+                            <input name="arrivaltime_lte" type="string" value={this.state.queryParams.arrivaltime_lte || ''} onChange={this.handleChange} />
                         </div>
                     </div>
-
-
-
 
                     <div className="row">
                         <div className="col-sm-1" />
                         <div className="col-sm-2">
-                        <input name="departuretime_gte" type="string" value={this.state.queryParams.departuretime_gte || ''} onChange={this.handleChange} />
+                            <input name="departuretime_gte" type="string" value={this.state.queryParams.departuretime_gte || ''} onChange={this.handleChange} />
                         </div>
                         <label className="col-sm-2"> &lt;= DepartureTime &lt;=  </label>
                         <div className="col-sm-2">
-                        <input name="departuretime_lte" type="string" value={this.state.queryParams.departuretime_lte || ''} onChange={this.handleChange} />
+                            <input name="departuretime_lte" type="string" value={this.state.queryParams.departuretime_lte || ''} onChange={this.handleChange} />
                         </div>
                         <div>
-                        <button className="btn warning" type="button" name="Submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
+                            <button className="btn btn-info warning" type="button" name="Submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
 
-                            </div>
+                        </div>
                     </div>
-
-
-
                 </div>
                 <div><h1></h1></div>
                 <ReactTable

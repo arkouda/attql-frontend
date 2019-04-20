@@ -11,8 +11,8 @@ export class VisTimeline extends React.Component<IVisTimelineProps> {
     componentDidMount = () => {
         var container: HTMLElement | null = document.getElementById("timeline");
         var timeline = new Vis.Timeline(container as HTMLElement, this.props.items, this.props.group, this.props.options);
-        console.log("options", this.props.options);
-        console.log("timeline", timeline);
+        // console.log("options", this.props.options);
+        // console.log("timeline", timeline);
     }; 
     render = () => {
         return (
