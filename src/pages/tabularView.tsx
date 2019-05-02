@@ -3,6 +3,9 @@ import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import { ITabularViewProps, ITabularViewState } from "../Interfaces"
 import { buildUrl, tabViewURL, statify } from "../Helper"
+import { model } from "../protos/out/model"
+const axios = require("axios");
+const tabVmodel = model.TabView;
 
 export class TabularView extends Component<ITabularViewProps, ITabularViewState> {
 
@@ -19,10 +22,19 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
         };
     };
 
+    
     componentDidMount = () => {
-        fetch(buildUrl(this.state.api_url, this.state.queryParams))
-            .then(result => { return result.json() })
-            .then(data => this.setState(statify({ data: data }, this.state)));
+        axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+            responseType: 'arraybuffer'
+        })
+        .then((res: any) => {
+            const data = res.data; 
+            const parsed = tabVmodel.decode(new Uint8Array(data));
+            const message = tabVmodel.toObject(parsed);
+            const finalData = message['tabV'];
+            return finalData; 
+        })
+        .then((data: any) => this.setState(statify({ data: data }, this.state)));
     };
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +52,17 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
         this.setState(statify({ api_url: buildUrl(tabViewURL, this.state.queryParams) }, this.state), () => {
             // console.log("TabularView QueryParams", this.state.queryParams);
             // console.log("TabularView API URL", this.state.api_url);
-            fetch(this.state.api_url)
-                .then(result => { return result.json() })
-                .then(data => this.setState(statify({ data: data }, this.state)));
+            axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+                responseType: 'arraybuffer'
+            })
+            .then((res: any) => {
+                const data = res.data; 
+                const parsed = tabVmodel.decode(new Uint8Array(data));
+                const message = tabVmodel.toObject(parsed);
+                const finalData = message['tabV'];
+                return finalData; 
+            })
+            .then((data:any) => this.setState(statify({ data: data }, this.state)));
         });
     };
 

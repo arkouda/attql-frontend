@@ -5,6 +5,9 @@ import 'react-table/react-table.css';
 import { IHierarchicalViewProps, IHierarchicalViewState } from "../Interfaces"
 import { buildUrl, hierarchicalViewURL, statify } from "../Helper"
 import HierarchicalDetailView from './hierarchicalDetailView';
+import { model } from "../protos/out/model"
+const axios = require("axios");
+const hierarchicalV = model.HierarchicalView;
 
 export class HierarchicalView extends Component<IHierarchicalViewProps, IHierarchicalViewState> {
 
@@ -18,10 +21,17 @@ export class HierarchicalView extends Component<IHierarchicalViewProps, IHierarc
     };
 
     componentDidMount = () => {
-        console.log(buildUrl(this.state.api_url, this.state.queryParams));
-        fetch(buildUrl(this.state.api_url, this.state.queryParams))
-            .then(result => { return result.json() })
-            .then(data => this.setState(statify({ data: data }, this.state)));
+        axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+            responseType: 'arraybuffer'
+        })
+        .then((res: any) => {
+            const data = res.data; 
+            const parsed = hierarchicalV.decode(new Uint8Array(data));
+            const message = hierarchicalV.toObject(parsed);
+            const finalData = message['hierarchicalV'];
+            return finalData; 
+        })
+        .then((data: any) => this.setState(statify({ data: data }, this.state)));
     };
 
     handleChange = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,10 +40,18 @@ export class HierarchicalView extends Component<IHierarchicalViewProps, IHierarc
         newQueryParams['hflag'] = name;
         var newState: any = { queryParams: statify(newQueryParams, this.state.queryParams) };
         console.log("HierarchicalView State", this.state);
-        this.setState(statify({ api_url: buildUrl('http://localhost:3001/hierarchicalview', newQueryParams), queryParams: newQueryParams }, this.state), () => {
-            fetch(this.state.api_url)
-                .then(result => { return result.json() })
-                .then(data => this.setState(statify({ data: data }, this.state)));
+        this.setState(statify({ api_url: 'http://localhost:3001/hierarchicalview', queryParams: newQueryParams }, this.state), () => {
+            axios.get(buildUrl(this.state.api_url, newQueryParams)  , {
+                responseType: 'arraybuffer'
+            })
+            .then((res: any) => {
+                const data = res.data; 
+                const parsed = hierarchicalV.decode(new Uint8Array(data));
+                const message = hierarchicalV.toObject(parsed);
+                const finalData = message['hierarchicalV'];
+                return finalData; 
+            })
+            .then((data: any)=> this.setState(statify({ data: data }, this.state)));
         });
     };
 

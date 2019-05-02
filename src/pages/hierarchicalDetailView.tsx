@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import { IHierarchicalDetailViewProps, IHierarchicalDetailViewState } from '../Interfaces';
 import { buildUrl, hierarchicalDetailViewURL, statify } from "../Helper"
+import {model} from "../protos/out/model";
+const axios = require("axios");
+const hierarchicalDV = model.HierarchicalDetailView;
 
 export default class HierarchicalDetailView extends Component<IHierarchicalDetailViewProps, IHierarchicalDetailViewState> {
     constructor(props: IHierarchicalDetailViewProps) {
@@ -18,10 +21,17 @@ export default class HierarchicalDetailView extends Component<IHierarchicalDetai
 
     };
     componentDidMount = () => {
-        console.log(buildUrl(this.state.api_url, this.state.queryParams));
-        fetch(buildUrl(this.state.api_url, this.state.queryParams))
-            .then(result => { return result.json() })
-            .then(data => this.setState(statify({ data: data }, this.state)));
+        axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+            responseType: 'arraybuffer'
+        })
+        .then((res: any) => {
+            const data = res.data; 
+            const parsed = hierarchicalDV.decode(new Uint8Array(data));
+            const message = hierarchicalDV.toObject(parsed);
+            const finalData = message['hierarchicalDV'];
+            return finalData; 
+        })
+        .then((data: any) => this.setState(statify({ data: data }, this.state)));
     };
 
     render = () => {

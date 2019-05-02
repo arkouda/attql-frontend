@@ -4,6 +4,9 @@ import "../../node_modules/vis/dist/vis.min.css";
 import { ITimelineViewProps, ITimelineViewState, Items, Item } from "../Interfaces"
 import { buildUrl, timelineViewURL, statify } from "../Helper"
 import moment, { Moment } from "moment";
+import {model} from "../protos/out/model";
+const axios = require("axios");
+const timelineV = model.TimelineView;
 
 export class TimelineView extends Component<ITimelineViewProps, ITimelineViewState> {
 
@@ -22,9 +25,17 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
     };
 
     componentWillMount = () => {
-        fetch(buildUrl(this.state.api_url, this.state.queryParams))
-            .then(result => { return result.json() })
-            .then(data => this.setState(statify({ data: data, renderFlag: true }, this.state)));
+        axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+            responseType: 'arraybuffer'
+        })
+        .then((res: any) => {
+            const data = res.data; 
+            const parsed = timelineV.decode(new Uint8Array(data));
+            const message = timelineV.toObject(parsed);
+            console.log(message);
+            return message; 
+        })
+        .then((data: any) => this.setState(statify({ data: data, renderFlag: true }, this.state)));
     };
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,12 +50,20 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
     };
 
     handleSubmit = () => {
-        this.setState(statify({ api_url: buildUrl(timelineViewURL, this.state.queryParams), renderFlag: false }, this.state), () => {
+        this.setState(statify({ api_url: timelineViewURL, renderFlag: false }, this.state), () => {
             // console.log("TimelineView QueryParams", this.state.queryParams);
             // console.log("TimelineView API URL", this.state.api_url);
-            fetch(this.state.api_url)
-                .then(result => { return result.json() })
-                .then(data => this.setState(statify({ data: data, renderFlag: true }, this.state)));
+            axios.get(buildUrl(this.state.api_url, this.state.queryParams), {
+                responseType: 'arraybuffer'
+            })
+            .then((res: any) => {
+                const data = res.data; 
+                const parsed = timelineV.decode(new Uint8Array(data));
+                const message = timelineV.toObject(parsed);
+                console.log(message);
+                return message; 
+            })
+            .then((data: any)  => this.setState(statify({ data: data, renderFlag: true }, this.state)));
         });
     };
 
@@ -67,8 +86,9 @@ export class TimelineView extends Component<ITimelineViewProps, ITimelineViewSta
         var optionStart = new Date();
         optionStart.setDate(optionStart.getDate() - 1);
         var optionEnd = new Date();
-        optionEnd.setDate(optionEnd.getDate() + this.state.queryParams.dayTo - this.state.queryParams.dayFrom + 1);
-        console.log(optionStart, optionEnd, this.state.queryParams.dayTo, this.state.queryParams.dayFrom);
+        optionEnd.setDate(optionEnd.getDate() + 3);
+        // optionEnd.setDate(optionEnd.getDate() + this.state.queryParams.dayTo - this.state.queryParams.dayFrom + 1);
+        // console.log(optionStart, optionEnd, this.state.queryParams.dayTo, this.state.queryParams.dayFrom);
         var options = {
             orientation: 'top',
             maxHeight: 500,
