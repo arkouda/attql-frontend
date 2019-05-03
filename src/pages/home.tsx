@@ -4,6 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import { TabularView } from './tabularView';
 import { TimelineView } from './timelineView';
 import { HierarchicalView } from './hierarchicalView';
+import { AddRecordView } from './addRecord';
 
 export class Home extends Component {
     render() {
@@ -17,16 +18,20 @@ export class Home extends Component {
                         <Tab>Tabular View</Tab>
                         <Tab>Hierarchical View</Tab>
                         <Tab>Timeline View</Tab>
+                        <Tab>Add Record</Tab>
                     </TabList>
 
                     <TabPanel>
                         <TabularView></TabularView>
                     </TabPanel>
                     <TabPanel>
-                        <HierarchicalView/>
+                        <HierarchicalView />
                     </TabPanel>
                     <TabPanel>
-                        <TimelineView/> 
+                        <TimelineView />
+                    </TabPanel>
+                    <TabPanel>
+                        <AddRecordView />
                     </TabPanel>
                 </Tabs>
             </div>);

@@ -16,6 +16,8 @@ export const hierarchicalViewURL = 'http://localhost:3001/hierarchicalView';
 
 export const hierarchicalDetailViewURL = 'http://localhost:3001/hierarchicalViewDetail';
 
+export const addRecordViewURL = 'http://localhost:3001/addRecord';
+
 export var buildUrl = (url: string, parameters: any) => {
     let qs = "";
     for (const key in parameters) {

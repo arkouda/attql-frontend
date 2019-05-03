@@ -2,6 +2,7 @@ import { TabularView } from "./pages/tabularView";
 import { HierarchicalView } from "./pages/hierarchicalView";
 import HierarchicalDetailView from "./pages/hierarchicalDetailView";
 
+
 // VisTimeline typings
 
 export interface Group {
@@ -15,7 +16,21 @@ export interface Item {
     departTime: string;
 }
 
+export interface AttendanceModel {
+    day: number,
+    studid: number,
+    arrivalTime: string,
+    departTime: string
+}
 
+export interface AttendanceTimeModel {
+    arrivalHH: number,
+    arrivalMM: number,
+    arrivalSS: number,
+    departHH: number,
+    departMM: number,
+    departSS: number
+}
 
 export interface Items {
     groupid: number;
@@ -34,9 +49,19 @@ export interface IVisTimelineProps {
 
 // Module Typings ////////////////////
 
+// AddRecord View
+
+export interface IAddRecordViewProps { }
+
+export interface IAddRecordViewState {
+    api_url: string,
+    timeSegmented: AttendanceTimeModel
+    attParams: AttendanceModel
+}
+
 // Hierarchical View
 
-export interface IHierarchicalViewProps {}
+export interface IHierarchicalViewProps { }
 
 export interface IHierarchicalViewState {
     data?: object[],
@@ -51,13 +76,13 @@ export interface IHierarchicalViewQueryParams {
 // Hierarchical Detail View
 
 export interface IHierarchicalDetailViewProps {
-    hflag : string,
-    selected_id : number
+    hflag: string,
+    selected_id: number
 }
 export interface IHierarchicalDetailViewState {
     data?: object[],
     queryParams: IHierarchicalDetailViewQueryParams,
-    api_url: string 
+    api_url: string
 }
 
 export interface IHierarchicalDetailViewQueryParams {
@@ -68,10 +93,10 @@ export interface IHierarchicalDetailViewQueryParams {
 
 // Timeline View
 
-export interface ITimelineViewProps {}
+export interface ITimelineViewProps { }
 
 export interface ITimelineViewState {
-    data: {items: Items[], group: Group[]},
+    data: { items: Items[], group: Group[] },
     queryParams: ITimelineViewQueryParams,
     api_url: string,
     renderFlag?: Boolean
@@ -86,7 +111,7 @@ export interface ITimelineViewQueryParams {
 
 // Tabular View
 
-export interface ITabularViewProps {}
+export interface ITabularViewProps { }
 
 export interface ITabularViewState {
     data?: object[],
@@ -95,14 +120,14 @@ export interface ITabularViewState {
 }
 
 export interface ITabularViewQueryParams {
-    rollno_gte? : number,
-    rollno_lte? : number,
-    day_gte? : number,
-    day_lte? : number,
-    arrivaltime_gte? : string,
-    arrivaltime_lte? : string,
-    departuretime_gte? : string,
-    departuretime_lte? : string,
+    rollno_gte?: number,
+    rollno_lte?: number,
+    day_gte?: number,
+    day_lte?: number,
+    arrivaltime_gte?: string,
+    arrivaltime_lte?: string,
+    departuretime_gte?: string,
+    departuretime_lte?: string,
     limit: number,
     offset: number,
     page: number
