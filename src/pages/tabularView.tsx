@@ -128,7 +128,6 @@ export class TabularView extends Component<ITabularViewProps, ITabularViewState>
                         </div>
                         <div>
                             <button className="btn btn-info warning" type="button" name="Submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
-
                         </div>
                     </div>
                 </div>
