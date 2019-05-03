@@ -45,7 +45,11 @@ export interface IHierarchicalViewState {
 }
 
 export interface IHierarchicalViewQueryParams {
-    hflag: string
+    hflag: string,
+    rollnoORday_lte?: number,
+    rollnoORday_gte?: number,
+    count_gte?: number,
+    count_lte?: number
 }
 
 // Hierarchical Detail View
